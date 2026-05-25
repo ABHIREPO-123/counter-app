@@ -192,7 +192,7 @@ export default function MobileApp() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-slate-100 p-4">
       {/* Mobile Frame Container */}
-      <div className="w-full max-w-md h-[844] bg-white rounded-[40px] shadow-2xl overflow-hidden border-8 border-slate-800 relative flex flex-col justify-between p-6">
+      <div className="w-full max-w-md h-[644] bg-white rounded-[40] shadow-2xl overflow-hidden border-8 border-slate-800 relative flex flex-col justify-between p-6">
         {/* TOP BAR: Header & Save Button */}
         <div className="flex justify-between items-center w-full border-b pb-4 pt-2">
           <h1 className="text-xl font-bold text-slate-800">Counter App</h1>
@@ -225,8 +225,8 @@ export default function MobileApp() {
         </div>
 
         {/* BOTTOM BAR: Interactive Circle Button */}
-        <div className="flex justify-center items-center w-full pb-52">
-          <button
+        <div className="flex justify-center items-center w-full pb-43">
+          {/* <button
             onMouseDown={() => {
               setIsPressed(true);
               setCount((prev) => prev + 1);
@@ -240,6 +240,36 @@ export default function MobileApp() {
             onTouchEnd={() => setIsPressed(false)}
             disabled={isLoading}
             className={`w-52 h-52 rounded-full shadow-lg border-4 border-white transition-colors duration-200 flex items-center justify-center text-white font-bold text-lg select-none transform active:scale-95 ${
+              isLoading
+                ? "bg-slate-300 cursor-not-allowed"
+                : isPressed
+                  ? "bg-green-500 shadow-green-200"
+                  : "bg-red-500 shadow-red-200"
+            }`}
+          >
+            {isLoading ? "..." : isPressed ? "HELD" : "TAP"}
+          </button> */}
+
+          <button
+            // Mobile touch ke liye (preventDefault se yeh mouse event ko trigger nahi hone dega)
+            onTouchStart={(e) => {
+              e.preventDefault(); // This is the magic line!
+              setIsPressed(true);
+              setCount((prev) => prev + 1);
+            }}
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              setIsPressed(false);
+            }}
+            // Desktop mouse ke liye
+            onMouseDown={() => {
+              setIsPressed(true);
+              setCount((prev) => prev + 1);
+            }}
+            onMouseUp={() => setIsPressed(false)}
+            onMouseLeave={() => setIsPressed(false)}
+            disabled={isLoading}
+            className={`w-32 h-32 rounded-full shadow-lg border-4 border-white transition-colors duration-200 flex items-center justify-center text-white font-bold text-lg select-none transform active:scale-95 ${
               isLoading
                 ? "bg-slate-300 cursor-not-allowed"
                 : isPressed
